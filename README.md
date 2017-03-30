@@ -19,6 +19,12 @@ least percentage of proved checks.
 
 ## Usage
 
+``gnatprove2xls.py`` depends on the ``xlwt`` module. You can install it using 
+this command:
+```
+pip3 install xlwt
+```
+
 The follow command reads the GNATprove report file ``gnatprove.out`` and generates
 a spreadsheet called ``gnatprove.xls``:
 
