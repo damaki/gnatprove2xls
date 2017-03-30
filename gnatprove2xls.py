@@ -18,6 +18,7 @@
 import argparse
 import xlwt
 import re
+import sys
 
 # Regular expressions used to parse the GNATprove report file.
 analysis_re   = re.compile(r'^Analyzed (\d+) units$')
@@ -272,7 +273,17 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     
-    results = parse_gnatprove_report(args.file[0])
+    try:
+        results = parse_gnatprove_report(args.file[0])
+    except Exception as ex:
+        sys.stderr.write("Failed to read GNATprove report file {}\n".format(args.file[0]))
+        sys.stderr.write("Reason: {}\n".format(ex))
+        sys.exit(-1)
     
-    if args.out:
-        save_results(results, args.out)
+    try:
+        if args.out:
+            save_results(results, args.out)
+    except Exception as ex:
+        sys.stderr.write("Failed to save spreadsheet file {}\n".format(args.out))
+        sys.stderr.write("Reason: {}\n".format(ex))
+        sys.exit(-1)
